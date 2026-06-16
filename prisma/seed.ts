@@ -9,6 +9,7 @@ interface MaterialSeed {
   description?: string;
   fileUrl?: string;
   externalUrl?: string;
+  fileSizeBytes?: number;
   order: number;
 }
 
@@ -39,7 +40,7 @@ const courses: CourseSeed[] = [
       "Build foundation for microeconomic analysis",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem1/1_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem1/1_0syllabus.html`, order: 1 },
       { type: "LECTURE_NOTES", title: "Introduction to Economics", externalUrl: `${BASE}/Sem1/1_1economics.html`, order: 2 },
       { type: "LECTURE_NOTES", title: "Introduction to Business Economics", externalUrl: `${BASE}/Sem1/1_2bEco.html`, order: 3 },
       { type: "LECTURE_NOTES", title: "Basic Concepts", externalUrl: `${BASE}/Sem1/1_3basicConcepts.html`, order: 4 },
@@ -62,7 +63,7 @@ const courses: CourseSeed[] = [
       "Apply pricing strategies in various market contexts",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem2/2_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem2/2_0syllabus.html`, order: 1 },
       { type: "LECTURE_NOTES", title: "Production Function", externalUrl: `${BASE}/Sem2/2_1production.html`, order: 2 },
       { type: "LECTURE_NOTES", title: "Cost Concepts", externalUrl: `${BASE}/Sem2/2_2cost.html`, order: 3 },
       { type: "LECTURE_NOTES", title: "Revenue Analysis", externalUrl: `${BASE}/Sem2/2_3revenue.html`, order: 4 },
@@ -88,7 +89,7 @@ const courses: CourseSeed[] = [
       "Trace circular flow of income in an economy",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem3/3_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem3/3_0syllabus.html`, order: 1 },
       { type: "LECTURE_NOTES", title: "Why Macroeconomics?", externalUrl: `${BASE}/Sem3/3_1introduction.html`, order: 2 },
       { type: "LECTURE_NOTES", title: "National Income", externalUrl: `${BASE}/Sem3/3_2nationalIncome.html`, order: 3 },
       { type: "LECTURE_NOTES", title: "Business Cycle", externalUrl: `${BASE}/Sem3/3_3businessCycle.html`, order: 4 },
@@ -109,7 +110,7 @@ const courses: CourseSeed[] = [
       "Connect banking concepts to broader economic policy",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem4/4_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem4/4_0syllabus.html`, order: 1 },
       { type: "LECTURE_NOTES", title: "Commercial Banking", externalUrl: `${BASE}/Sem4/4_1banking.html`, order: 2 },
       { type: "PDF", title: "Semester 4 Complete Notes (PDF)", fileUrl: `${BASE}/Sem4/semTwo.pdf`, order: 3 },
     ],
@@ -127,7 +128,7 @@ const courses: CourseSeed[] = [
       "Evaluate taxation systems and their economic impact",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem5/5_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem5/5_0syllabus.html`, order: 1 },
       { type: "LECTURE_NOTES", title: "Public Finance", externalUrl: `${BASE}/Sem5/5_1publicFinance.html`, order: 2 },
     ],
   },
@@ -144,7 +145,7 @@ const courses: CourseSeed[] = [
       "Evaluate globalization's impact on domestic economies",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem6/6_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem6/6_0syllabus.html`, order: 1 },
       { type: "PDF", title: "Semester 6 Complete Notes (PDF)", fileUrl: `${BASE}/Sem6/semTwo.pdf`, order: 2 },
     ],
   },
@@ -161,7 +162,7 @@ const courses: CourseSeed[] = [
       "Use indifference curves and surplus concepts in practice",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem5E/5E_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem5E/5E_0syllabus.html`, order: 1 },
       { type: "PDF", title: "Elective 5 Complete Notes (PDF)", fileUrl: `${BASE}/Sem5E/semTwo.pdf`, order: 2 },
     ],
   },
@@ -178,7 +179,7 @@ const courses: CourseSeed[] = [
       "Understand macroeconomic environment's impact on firms",
     ],
     materials: [
-      { type: "LECTURE_NOTES", title: "Syllabus", externalUrl: `${BASE}/Sem6E/6E_0syllabus.html`, order: 1 },
+      { type: "LECTURE_NOTES", title: "Business Economics Syllabus", externalUrl: `${BASE}/Sem6E/6E_0syllabus.html`, order: 1 },
       { type: "PDF", title: "Elective 6 Complete Notes (PDF)", fileUrl: `${BASE}/Sem6E/semTwo.pdf`, order: 2 },
     ],
   },

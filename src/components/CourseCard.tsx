@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, BookMarked } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { CourseWithMaterials } from "@/types";
+import { getAcademicYear } from "@/lib/utils";
 
 interface CourseCardProps {
   course: CourseWithMaterials;
@@ -16,19 +16,23 @@ const categoryLabels: Record<string, string> = {
 
 export function CourseCard({ course }: CourseCardProps) {
   const materialCount = course._count?.materials ?? course.materials?.length ?? 0;
+  const academicYear = getAcademicYear(course.semester);
 
   return (
     <Link href={`/courses/${course.slug}`}>
       <Card className="card-interactive group h-full border bg-card transition-all md:hover:border-primary/50 md:hover:shadow-md">
         <CardHeader>
           <div className="flex items-start justify-between gap-2">
-            <Badge variant="secondary">
+            <div className="flex flex-wrap gap-1">
+              {academicYear && <Badge>{academicYear}</Badge>}
+              <Badge variant="secondary">
               {course.category === "ELECTIVE"
                 ? `Sem ${course.semester}E`
                 : course.semester > 0
                   ? `Sem ${course.semester}`
                   : "PD"}
-            </Badge>
+              </Badge>
+            </div>
             <Badge variant="outline">{categoryLabels[course.category]}</Badge>
           </div>
           <CardTitle className="group-hover:text-primary">{course.title}</CardTitle>

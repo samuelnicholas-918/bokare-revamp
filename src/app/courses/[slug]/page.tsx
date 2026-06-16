@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/db";
-import { MATERIAL_TYPE_LABELS } from "@/lib/utils";
+import { MATERIAL_TYPE_LABELS, getAcademicYear } from "@/lib/utils";
 import { MaterialType } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
@@ -53,6 +53,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
   );
 
   const typesWithContent = Object.keys(materialsByType) as MaterialType[];
+  const academicYear = getAcademicYear(course.semester);
 
   return (
     <>
@@ -70,6 +71,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
         <div className="lg:col-span-2">
           <div className="mb-6">
             <div className="mb-2 flex flex-wrap gap-2">
+              {academicYear && <Badge>{academicYear}</Badge>}
               <Badge>
                 {course.category === "ELECTIVE"
                   ? `Semester ${course.semester}E`

@@ -41,7 +41,8 @@ export async function GET(
       return NextResponse.json({ error: "No file available" }, { status: 404 });
     }
 
-    return NextResponse.redirect(url);
+    const target = url.startsWith("/") ? new URL(url, request.url).toString() : url;
+    return NextResponse.redirect(target);
   } catch (error) {
     console.error("GET /api/materials/[id]/download:", error);
     return NextResponse.json({ error: "Download failed" }, { status: 500 });

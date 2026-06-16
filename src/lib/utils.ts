@@ -20,6 +20,13 @@ export function formatDate(date: Date | string): string {
   }).format(new Date(date));
 }
 
+export function getAcademicYear(semester: number): string | null {
+  if (semester === 1 || semester === 2) return "First Year";
+  if (semester === 3 || semester === 4) return "Second Year";
+  if (semester === 5 || semester === 6) return "Third Year";
+  return null;
+}
+
 export const MATERIAL_TYPE_LABELS: Record<string, string> = {
   LECTURE_NOTES: "Lecture Notes",
   NUMERICAL_PROBLEMS: "Numerical Problems",
