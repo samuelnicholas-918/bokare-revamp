@@ -1,12 +1,15 @@
 "use client";
 
 import Script from "next/script";
+import { cn } from "@/lib/utils";
 
 interface ContentRendererProps {
   html: string;
 }
 
 export function ContentRenderer({ html }: ContentRendererProps) {
+  const isSyllabus = html.includes("syllabus-doc");
+
   return (
     <>
       <Script
@@ -24,7 +27,7 @@ export function ContentRenderer({ html }: ContentRendererProps) {
         `}
       </Script>
       <article
-        className="content-prose animate-fade-in"
+        className={cn("content-prose animate-fade-in", isSyllabus && "content-syllabus")}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </>

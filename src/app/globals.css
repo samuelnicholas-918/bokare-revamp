@@ -221,6 +221,134 @@
     @apply my-4 overflow-x-auto rounded-lg border bg-charcoal p-4 font-code text-sm text-[#F5F5F5] dark:border-border;
   }
 
+  .content-syllabus .syllabus-doc {
+    @apply space-y-8;
+  }
+
+  .content-syllabus .syllabus-header {
+    @apply rounded-2xl border bg-gradient-to-br from-teal/10 via-card to-electric-blue/10 p-6 text-center md:p-8;
+  }
+
+  .content-syllabus .syllabus-meta {
+    @apply text-sm font-medium uppercase tracking-wide text-muted-foreground;
+  }
+
+  .content-syllabus .syllabus-code {
+    @apply mt-3 inline-flex flex-col gap-1 rounded-xl bg-background/80 px-4 py-2 text-sm;
+  }
+
+  .content-syllabus .syllabus-code span {
+    @apply text-xs uppercase tracking-wide text-muted-foreground;
+  }
+
+  .content-syllabus .syllabus-title {
+    @apply mt-4 font-display text-2xl font-bold text-foreground md:text-3xl;
+  }
+
+  .content-syllabus .syllabus-credits {
+    @apply mt-5 inline-flex flex-col items-center rounded-full bg-teal px-5 py-2 text-white;
+  }
+
+  .content-syllabus .syllabus-credits-value {
+    @apply text-2xl font-bold leading-none;
+  }
+
+  .content-syllabus .syllabus-credits-label {
+    @apply text-xs uppercase tracking-wide text-white/80;
+  }
+
+  .content-syllabus .syllabus-section {
+    @apply rounded-2xl border bg-card p-5 md:p-6;
+  }
+
+  .content-syllabus .syllabus-section-title {
+    @apply mb-4 font-display text-xl font-semibold text-teal dark:text-primary md:text-2xl;
+  }
+
+  .content-syllabus .syllabus-lead {
+    @apply mb-4 text-sm text-muted-foreground md:text-base;
+  }
+
+  .content-syllabus .syllabus-objectives {
+    @apply list-none space-y-3 pl-0;
+  }
+
+  .content-syllabus .syllabus-objectives li {
+    @apply flex gap-3 rounded-xl bg-muted/40 p-4;
+  }
+
+  .content-syllabus .syllabus-objective-num {
+    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal text-sm font-bold text-white;
+  }
+
+  .content-syllabus .syllabus-co-grid {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .content-syllabus .syllabus-co-card {
+    @apply rounded-xl border bg-muted/30 p-4;
+  }
+
+  .content-syllabus .syllabus-co-badge {
+    @apply mb-2 inline-flex rounded-md bg-purple/15 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-purple dark:text-[hsl(var(--accent-purple))];
+  }
+
+  .content-syllabus .syllabus-co-card p {
+    @apply mb-0 text-sm leading-relaxed md:text-base;
+  }
+
+  .content-syllabus .syllabus-unit-grid {
+    @apply grid gap-4 lg:grid-cols-2;
+  }
+
+  .content-syllabus .syllabus-unit-card {
+    @apply rounded-xl border bg-background p-4 md:p-5;
+  }
+
+  .content-syllabus .syllabus-unit-head {
+    @apply mb-3 flex items-center justify-between gap-3 border-b pb-3;
+  }
+
+  .content-syllabus .syllabus-unit-head h4 {
+    @apply m-0 font-display text-lg font-semibold text-foreground;
+  }
+
+  .content-syllabus .syllabus-hours {
+    @apply shrink-0 rounded-full bg-electric-blue/15 px-3 py-1 text-xs font-semibold text-electric-blue dark:text-[hsl(var(--accent-electric))];
+  }
+
+  .content-syllabus .syllabus-unit-label {
+    @apply mb-3 text-sm font-semibold text-teal dark:text-primary;
+  }
+
+  .content-syllabus .syllabus-topic-list {
+    @apply mb-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground md:text-base;
+  }
+
+  .content-syllabus .syllabus-book-list {
+    @apply space-y-3 pl-5;
+  }
+
+  .content-syllabus .syllabus-book-list li {
+    @apply rounded-lg bg-muted/30 px-3 py-2 text-sm leading-relaxed md:text-base;
+  }
+
+  .content-syllabus .syllabus-eval-grid {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+
+  .content-syllabus .syllabus-eval-card {
+    @apply rounded-xl border border-gold/30 bg-gold/10 p-4 dark:bg-gold/15;
+  }
+
+  .content-syllabus .syllabus-eval-card p {
+    @apply mb-0 text-sm leading-relaxed md:text-base;
+  }
+
+  .content-syllabus .syllabus-marks-table {
+    @apply mt-4;
+  }
+
   .touch-target {
     @apply inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation;
   }

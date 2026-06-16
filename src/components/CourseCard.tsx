@@ -3,6 +3,7 @@ import { ArrowRight, BookMarked } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getAcademicYear } from "@/lib/utils";
+import type { CourseWithMaterials } from "@/types";
 
 interface CourseCardProps {
   course: CourseWithMaterials;

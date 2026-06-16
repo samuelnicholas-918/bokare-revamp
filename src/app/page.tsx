@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock, GraduationCap } from "lucide-react";
+import { BookOpen, Clock, GraduationCap } from "lucide-react";
 import { SearchBar } from "@/components/SearchBar";
-import { CourseCard } from "@/components/CourseCard";
-import { Button } from "@/components/ui/button";
+import { YearCourseSections } from "@/components/YearCourseSections";
+import { YearNavCard } from "@/components/YearNavCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/db";
-import { formatDate } from "@/lib/utils";
+import { ACADEMIC_YEARS, courseBelongsToYear, formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -32,8 +32,22 @@ async function getHomeData() {
 
 export default async function HomePage() {
   const { courses, recentMaterials } = await getHomeData();
-  const coreCourses = courses.filter((c) => c.category === "CORE");
-  const electives = courses.filter((c) => c.category === "ELECTIVE");
+
+  const yearSummaries = ACADEMIC_YEARS.map((year) => {
+    const yearCourses = courses.filter((course) =>
+      courseBelongsToYear(course.semester, course.category, year.id)
+    );
+    const materialCount = yearCourses.reduce(
+      (total, course) => total + (course._count?.materials ?? 0),
+      0
+    );
+
+    return {
+      ...year,
+      courseCount: yearCourses.length,
+      materialCount,
+    };
+  });
 
   return (
     <>
@@ -48,8 +62,8 @@ export default async function HomePage() {
               Your Economics Study Hub
             </h1>
             <p className="mt-3 text-base text-muted-foreground md:mt-4 md:text-xl">
-              Empowering students with organized resources in Business Economics and its modern
-              tools — lecture notes, PDFs, and more across all semesters.
+              Pick your year, find your semester, and download everything you need — no login
+              required.
             </p>
             <div className="mx-auto mt-8 max-w-xl">
               <SearchBar size="lg" />
@@ -58,38 +72,28 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-12">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h2 className="font-display text-2xl font-bold md:text-3xl">Core Courses</h2>
-            <p className="mt-1 text-muted-foreground">Semesters 1 through 6</p>
-          </div>
-          <Button variant="outline" asChild className="hidden sm:inline-flex">
-            <Link href="/courses">
-              View all <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
-          </Button>
+      <section className="container mx-auto px-4 py-10 md:py-12">
+        <div className="mb-6 text-center md:mb-8">
+          <h2 className="font-display text-2xl font-bold md:text-3xl">Choose Your Year</h2>
+          <p className="mt-1 text-muted-foreground">
+            Jump straight to First, Second, or Third Year courses
+          </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {coreCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+        <div className="grid gap-4 md:grid-cols-3">
+          {yearSummaries.map((year) => (
+            <YearNavCard
+              key={year.id}
+              id={year.id}
+              label={year.label}
+              description={year.description}
+              courseCount={year.courseCount}
+              materialCount={year.materialCount}
+            />
           ))}
         </div>
       </section>
 
-      {electives.length > 0 && (
-        <section className="bg-muted/30 py-12">
-          <div className="container mx-auto px-4">
-            <h2 className="font-display text-2xl font-bold md:text-3xl">Electives</h2>
-            <p className="mt-1 mb-8 text-muted-foreground">Managerial Economics courses</p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {electives.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <YearCourseSections courses={courses} />
 
       <section className="container mx-auto px-4 py-12">
         <div className="grid gap-8 lg:grid-cols-2">
@@ -133,9 +137,9 @@ export default async function HomePage() {
             <CardContent>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { label: "Lecture Notes", href: "/search?type=LECTURE_NOTES" },
-                  { label: "PDF Resources", href: "/search?type=PDF" },
-                  { label: "Question Bank", href: "/search?type=QUESTION_BANK" },
+                  { label: "First Year", href: "#first-year" },
+                  { label: "Second Year", href: "#second-year" },
+                  { label: "Third Year", href: "#third-year" },
                   { label: "All Materials", href: "/search" },
                 ].map((item) => (
                   <Link

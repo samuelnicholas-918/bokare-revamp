@@ -35,7 +35,7 @@ async function main() {
       continue;
     }
 
-    const cleaned = addHeadingIds(cleanHtml(raw));
+    const cleaned = addHeadingIds(cleanHtml(raw, { formatAsSyllabus: source.slug === "syllabus" }));
     const title = source.title;
     const externalUrl = url;
 

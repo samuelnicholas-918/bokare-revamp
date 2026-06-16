@@ -27,6 +27,48 @@ export function getAcademicYear(semester: number): string | null {
   return null;
 }
 
+export const ACADEMIC_YEARS = [
+  {
+    id: "first-year",
+    label: "First Year",
+    description: "Semesters 1 & 2",
+    semesters: [1, 2],
+  },
+  {
+    id: "second-year",
+    label: "Second Year",
+    description: "Semesters 3 & 4",
+    semesters: [3, 4],
+  },
+  {
+    id: "third-year",
+    label: "Third Year",
+    description: "Semesters 5 & 6",
+    semesters: [5, 6],
+  },
+] as const;
+
+export type AcademicYearId = (typeof ACADEMIC_YEARS)[number]["id"];
+
+export function courseBelongsToYear(
+  semester: number,
+  category: string,
+  yearId: AcademicYearId
+): boolean {
+  const year = ACADEMIC_YEARS.find((entry) => entry.id === yearId);
+  if (!year) return false;
+
+  if (category === "ELECTIVE") {
+    return yearId === "third-year" && (semester === 5 || semester === 6);
+  }
+
+  if (category === "CORE") {
+    return (year.semesters as readonly number[]).includes(semester);
+  }
+
+  return false;
+}
+
 export const MATERIAL_TYPE_LABELS: Record<string, string> = {
   LECTURE_NOTES: "Lecture Notes",
   NUMERICAL_PROBLEMS: "Numerical Problems",

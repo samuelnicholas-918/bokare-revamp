@@ -5,6 +5,8 @@ const TYPO_FIXES: Record<string, string> = {
   Peoduction: "Production",
   "Business Cucle": "Business Cycle",
   Manegerial: "Managerial",
+  Manaagerial: "Managerial",
+  Approaach: "Approach",
   Elaticity: "Elasticity",
   difinitions: "definitions",
   "Introduction Business Economics": "Introduction to Business Economics",
@@ -37,7 +39,9 @@ export function extractTitle(html: string, fallback: string): string {
   return fixTypos(title.replace(/\.$/, ""));
 }
 
-export function cleanHtml(rawHtml: string): string {
+import { formatSyllabusHtml, isSyllabusContent } from "./format-syllabus";
+
+export function cleanHtml(rawHtml: string, options?: { formatAsSyllabus?: boolean }): string {
   const $ = cheerio.load(rawHtml);
 
   $("script, style, link, meta, head, button, noscript, iframe").remove();
@@ -101,6 +105,10 @@ export function cleanHtml(rawHtml: string): string {
   // Remove empty paragraphs
   body = body.replace(/<p>\s*<\/p>/gi, "");
 
+  if (options?.formatAsSyllabus || isSyllabusContent(body)) {
+    body = formatSyllabusHtml(body);
+  }
+
   return body.trim();
 }
 
@@ -127,12 +135,12 @@ export function extractHeadings(html: string): { id: string; text: string; level
 }
 
 export function addHeadingIds(html: string): string {
-  const $ = cheerio.load(html);
+  const $ = cheerio.load(html, null, false);
   $("h2, h3, h4").each((_, el) => {
     const text = $(el).text().trim();
     if (text) $(el).attr("id", slugify(text));
   });
-  return $.html();
+  return $.root().html()?.trim() || html;
 }
 
 export function getWordCount(html: string): number {
