@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bokare.in Redesign
 
-## Getting Started
+Modern B.Com Business Economics course materials platform — rebuilt with Next.js 14, TypeScript, and PostgreSQL.
 
-First, run the development server:
+## Quick Start
 
 ```bash
+cp .env.example .env
+# Add your Neon DATABASE_URL
+
+npm install
+npm run db:push
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Admin login:** `/admin/login` (default: `professor@bokare.in` / see `.env`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentation
 
-## Learn More
+- [Audit Report](docs/AUDIT_REPORT.md) — Current site analysis
+- [Architecture](docs/ARCHITECTURE.md) — System design overview
+- [API Docs](docs/API.md) — REST API reference
+- [Deployment](docs/DEPLOYMENT.md) — Vercel + Neon setup
+- [Admin Guide](docs/ADMIN_GUIDE.md) — Professor content management
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Responsive home dashboard with course grid
+- Course pages with tabbed material organization
+- Global search with type filters
+- Admin panel for upload and analytics
+- Download tracking
+- Professional teal/cream design system
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 14 · TypeScript · Tailwind CSS · Prisma · Neon PostgreSQL · NextAuth

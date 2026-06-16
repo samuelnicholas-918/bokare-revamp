@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum CourseCategory {
+  CORE
+  ELECTIVE
+  PROFESSIONAL
+}
+
+enum MaterialType {
+  LECTURE_NOTES
+  NUMERICAL_PROBLEMS
+  QUESTION_BANK
+  SELF_STUDY
+  TECHNICAL_NOTES
+  QUESTION_PAPERS
+  PDF
+  RESOURCES
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  name         String?
+  role         Role       @default(STUDENT)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  downloads    Download[]
+}
+
+model Course {
+  id                 String         @id @default(cuid())
+  semester           Int
+  title              String
+  slug               String         @unique
+  description        String?
+  category           CourseCategory @default(CORE)
+  learningObjectives String[]       @default([])
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  materials          Material[]
+
+  @@index([category])
+  @@index([semester])
+}
+
+model Material {
+  id            String       @id @default(cuid())
+  courseId      String
+  course        Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  slug          String?
+  type          MaterialType
+  title         String
+  description   String?
+  fileUrl       String?
+  externalUrl   String?
+  contentHtml   String?      @db.Text
+  order         Int          @default(0)
+  fileSizeBytes Int?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  downloads     Download[]
+
+  @@unique([courseId, slug])
+  @@index([courseId])
+  @@index([type])
+  @@index([title])
+}
+
+model Download {
+  id           String   @id @default(cuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  materialId   String
+  material     Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  downloadedAt DateTime @default(now())
+  ipAddress    String?
+
+  @@index([materialId])
+  @@index([downloadedAt])
+}
