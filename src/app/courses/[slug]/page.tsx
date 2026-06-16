@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import { MaterialList } from "@/components/MaterialList";
+import { CourseViewTracker } from "@/components/analytics/CourseViewTracker";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,7 +55,9 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
   const typesWithContent = Object.keys(materialsByType) as MaterialType[];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <CourseViewTracker courseId={course.id} slug={course.slug} title={course.title} />
+      <div className="container mx-auto px-4 py-8">
       <nav className="mb-6 flex items-center gap-1 text-sm text-muted-foreground">
         <Link href="/" className="hover:text-foreground">Home</Link>
         <ChevronRight className="h-4 w-4" />
@@ -145,5 +148,6 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
         </aside>
       </div>
     </div>
+    </>
   );
 }

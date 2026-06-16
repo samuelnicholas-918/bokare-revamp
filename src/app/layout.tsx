@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Providers } from "@/components/Providers";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
         className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`}
       >
         <Providers>
+          <AnalyticsTracker />
           <div className="flex min-h-screen flex-col pb-16 md:pb-0">
             <Navbar />
             <main className="flex-1">{children}</main>

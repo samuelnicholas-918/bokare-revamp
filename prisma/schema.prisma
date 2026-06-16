@@ -86,8 +86,25 @@ model Download {
   materialId   String
   material     Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
   downloadedAt DateTime @default(now())
-  ipAddress    String?
 
   @@index([materialId])
   @@index([downloadedAt])
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  sessionId  String
+  eventType  String
+  materialId String?
+  courseId   String?
+  data       Json?
+  userAgent  String?
+  urlPath    String?
+  deviceType String?
+  createdAt  DateTime @default(now())
+
+  @@index([eventType])
+  @@index([materialId])
+  @@index([sessionId])
+  @@index([createdAt])
 }

@@ -6,6 +6,7 @@ import { ContentHero } from "@/components/content/ContentHero";
 import { ContentRenderer } from "@/components/content/ContentRenderer";
 import { ContentSidebar } from "@/components/content/ContentSidebar";
 import { MobileContentNav } from "@/components/content/MobileContentNav";
+import { MaterialViewTracker } from "@/components/analytics/MaterialViewTracker";
 
 export const dynamic = "force-dynamic";
 
@@ -64,7 +65,13 @@ export default async function LearnPage({
   const next = idx < siblings.length - 1 ? siblings[idx + 1] : null;
 
   return (
-    <ContentLayout
+    <>
+      <MaterialViewTracker
+        materialId={material.id}
+        courseId={material.courseId}
+        title={material.title}
+      />
+      <ContentLayout
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Courses", href: "/courses" },
@@ -94,5 +101,6 @@ export default async function LearnPage({
       <ContentRenderer html={material.contentHtml} />
       <MobileContentNav courseSlug={params.slug} prev={prev} next={next} />
     </ContentLayout>
+    </>
   );
 }

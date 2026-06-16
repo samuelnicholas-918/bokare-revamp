@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BarChart3, Plus, Settings } from "lucide-react";
+import { BarChart3, FolderOpen, Plus, Settings } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -77,6 +77,12 @@ export default async function AdminDashboardPage() {
               <Link href="/admin/upload">
                 <Plus className="mr-2 h-4 w-4" />
                 Upload New Material
+              </Link>
+            </Button>
+            <Button variant="outline" asChild className="justify-start">
+              <Link href="/admin/manage-content">
+                <FolderOpen className="mr-2 h-4 w-4" />
+                Manage Content
               </Link>
             </Button>
             <Button variant="outline" asChild className="justify-start">

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Download, FileText, BookOpen } from "lucide-react";
+import { BookOpen, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MaterialTypeBadge } from "@/components/content/MaterialTypeBadge";
+import { MaterialDownloadButton } from "@/components/analytics/MaterialDownloadButton";
 import { formatDate, formatFileSize } from "@/lib/utils";
 import type { Material } from "@prisma/client";
 
@@ -69,12 +70,7 @@ export function MaterialList({ materials, courseSlug }: MaterialListProps) {
                   </Button>
                 )}
                 {material.fileUrl && (
-                  <Button size="sm" variant="outline" asChild>
-                    <a href={`/api/materials/${material.id}/download`} target="_blank" rel="noopener noreferrer">
-                      <Download className="mr-1 h-4 w-4" />
-                      PDF
-                    </a>
-                  </Button>
+                  <MaterialDownloadButton href={`/api/materials/${material.id}/download`} />
                 )}
                 {!hasReader && material.externalUrl && !material.fileUrl && (
                   <Button size="sm" variant="outline" asChild>
