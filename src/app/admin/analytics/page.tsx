@@ -1,6 +1,15 @@
+import nextDynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
-import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
+
+const AnalyticsDashboard = nextDynamic(
+  () =>
+    import("@/components/admin/AnalyticsDashboard").then((mod) => mod.AnalyticsDashboard),
+  {
+    ssr: false,
+    loading: () => <p className="text-muted-foreground">Loading analytics...</p>,
+  }
+);
 
 export const metadata = { title: "Analytics Dashboard" };
 export const dynamic = "force-dynamic";

@@ -17,19 +17,24 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const days = parseInt(searchParams.get("days") || "30", 10);
 
-  const [overview, topDownloads, popularSearches, traffic, devices] = await Promise.all([
-    getAnalyticsOverview(days),
-    getTopDownloads(days),
-    getPopularSearches(days),
-    getTrafficOverTime(days),
-    getDeviceBreakdown(days),
-  ]);
+  try {
+    const [overview, topDownloads, popularSearches, traffic, devices] = await Promise.all([
+      getAnalyticsOverview(days),
+      getTopDownloads(days),
+      getPopularSearches(days),
+      getTrafficOverTime(days),
+      getDeviceBreakdown(days),
+    ]);
 
-  return NextResponse.json({
-    overview,
-    topDownloads,
-    popularSearches,
-    traffic,
-    devices,
-  });
+    return NextResponse.json({
+      overview,
+      topDownloads,
+      popularSearches,
+      traffic,
+      devices,
+    });
+  } catch (error) {
+    console.error("GET /api/admin/analytics/overview:", error);
+    return NextResponse.json({ error: "Failed to load analytics" }, { status: 500 });
+  }
 }
