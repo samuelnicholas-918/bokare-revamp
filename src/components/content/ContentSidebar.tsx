@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Download, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MaterialDownloadButton } from "@/components/analytics/MaterialDownloadButton";
 import { TableOfContents } from "./TableOfContents";
 import { formatDate } from "@/lib/utils";
 
@@ -37,12 +38,7 @@ export function ContentSidebar({
         <h3 className="mb-3 text-sm font-semibold">Actions</h3>
         <div className="space-y-2">
           {fileUrl && (
-            <Button className="w-full min-h-11 bg-teal hover:bg-teal/90" size="sm" asChild>
-              <a href={`/api/materials/${materialId}/download`}>
-                <Download className="mr-2 h-4 w-4" />
-                Download PDF
-              </a>
-            </Button>
+            <MaterialDownloadButton href={`/api/materials/${materialId}/download`} />
           )}
           <Button variant="outline" className="w-full min-h-11" size="sm" asChild>
             <Link href={`/courses/${courseSlug}`}>Back to Course</Link>

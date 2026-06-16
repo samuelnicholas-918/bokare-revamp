@@ -1,9 +1,11 @@
+import Link from "next/link";
+import { Suspense } from "react";
 import { SearchBar } from "@/components/SearchBar";
+import { SearchTracker } from "@/components/analytics/SearchTracker";
 import { Badge } from "@/components/ui/badge";
 import { prisma } from "@/lib/db";
 import { MATERIAL_TYPE_LABELS } from "@/lib/utils";
 import { MaterialType } from "@prisma/client";
-import Link from "next/link";
 import { FileText, SearchX } from "lucide-react";
 
 export const metadata = {
@@ -57,6 +59,9 @@ export default async function SearchPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Suspense fallback={null}>
+        <SearchTracker resultCount={results.length} />
+      </Suspense>
       <div className="mx-auto max-w-2xl">
         <h1 className="font-display text-3xl font-bold">Search Materials</h1>
         <p className="mt-2 text-muted-foreground">

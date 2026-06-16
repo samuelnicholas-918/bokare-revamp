@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getSession } from "@/lib/auth";
+import { recordAnalyticsEvent } from "@/lib/analytics-server";
 
 export async function GET(
   request: NextRequest,
@@ -9,22 +9,32 @@ export async function GET(
   try {
     const material = await prisma.material.findUnique({
       where: { id: params.id },
+      include: { course: { select: { id: true } } },
     });
 
     if (!material) {
       return NextResponse.json({ error: "Material not found" }, { status: 404 });
     }
 
-    const session = await getSession();
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip");
+    const sessionId =
+      request.headers.get("x-bokare-session") ||
+      new URL(request.url).searchParams.get("session");
 
     await prisma.download.create({
-      data: {
-        materialId: material.id,
-        userId: (session?.user as { id?: string })?.id,
-        ipAddress: ip,
-      },
+      data: { materialId: material.id },
     });
+
+    if (sessionId) {
+      await recordAnalyticsEvent({
+        sessionId,
+        eventType: "material_downloaded",
+        materialId: material.id,
+        courseId: material.courseId,
+        data: { title: material.title },
+        userAgent: request.headers.get("user-agent") || undefined,
+        urlPath: `/api/materials/${material.id}/download`,
+      });
+    }
 
     const url = material.fileUrl || material.externalUrl;
     if (!url) {

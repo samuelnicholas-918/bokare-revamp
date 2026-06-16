@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { BarChart3, LayoutDashboard, LogOut, Plus } from "lucide-react";
+import { BarChart3, FolderOpen, LayoutDashboard, LogOut, Plus } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const adminLinks = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/upload", label: "Upload", icon: Plus },
+  { href: "/admin/manage-content", label: "Manage", icon: FolderOpen },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
