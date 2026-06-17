@@ -19,7 +19,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="glass-nav sticky top-0 z-50 border-b bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
       <div className="container mx-auto flex h-14 items-center justify-between px-4 md:h-16">
         <Link
           href="/"
@@ -48,9 +48,6 @@ export function Navbar() {
 
         <div className="flex items-center gap-1">
           <ThemeToggle />
-          <Button variant="outline" size="sm" asChild className="hidden min-h-11 sm:inline-flex">
-            <Link href="/admin/login">Admin</Link>
-          </Button>
           <Button
             variant="ghost"
             size="icon"

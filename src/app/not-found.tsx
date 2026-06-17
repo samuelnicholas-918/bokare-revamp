@@ -1,17 +1,14 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 export default function NotFound() {
   return (
-    <div className="container mx-auto flex min-h-[50vh] flex-col items-center justify-center px-4 text-center">
-      <h1 className="font-display text-6xl font-bold text-primary">404</h1>
-      <h2 className="mt-4 text-2xl font-semibold">Page Not Found</h2>
-      <p className="mt-2 max-w-md text-muted-foreground">
-        The page you&apos;re looking for doesn&apos;t exist or may have been moved.
-      </p>
-      <Button asChild className="mt-6">
-        <Link href="/">Back to Home</Link>
-      </Button>
+    <div className="container mx-auto flex min-h-[55vh] items-center justify-center px-4 py-12">
+      <EmptyState
+        variant="not-found"
+        action={{ label: "Back to Home", href: "/" }}
+        secondaryAction={{ label: "Browse Courses", href: "/courses" }}
+        className="w-full max-w-lg"
+      />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { CourseCard } from "@/components/CourseCard";
+import { PageHero } from "@/components/PageHero";
 import { Badge } from "@/components/ui/badge";
 import { prisma } from "@/lib/db";
 import {
@@ -51,16 +53,20 @@ export default async function CoursesPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold">
-          {activeYear ? `${activeYear.label} Courses` : "All Courses"}
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          {activeYear
+      <PageHero
+        eyebrow="Course catalog"
+        title={activeYear ? `${activeYear.label} Courses` : "All Courses"}
+        description={
+          activeYear
             ? `Business Economics resources for ${activeYear.description.toLowerCase()}.`
-            : "Browse all Business Economics courses organized by year and semester."}
+            : "Browse every Business Economics course — filter by year or category."
+        }
+        className="mb-8"
+      >
+        <p className="text-sm font-medium text-muted-foreground">
+          {filteredCourses.length} course{filteredCourses.length !== 1 ? "s" : ""} shown
         </p>
-      </div>
+      </PageHero>
 
       <div className="mb-4 flex flex-wrap gap-2">
         <Link href={category && category !== "ALL" ? `/courses?category=${category}` : "/courses"}>
@@ -114,11 +120,19 @@ export default async function CoursesPage({
       </div>
 
       {filteredCourses.length === 0 ? (
-        <p className="text-muted-foreground">No courses found for this filter.</p>
+        <EmptyState
+          variant="courses-filter"
+          action={{ label: "View all courses", href: "/courses" }}
+          secondaryAction={
+            year
+              ? { label: "Go home", href: "/" }
+              : { label: "Search materials", href: "/search" }
+          }
+        />
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+        <div className="stagger-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredCourses.map((course, i) => (
+            <CourseCard key={course.id} course={course} index={i} />
           ))}
         </div>
       )}

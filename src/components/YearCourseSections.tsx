@@ -40,7 +40,7 @@ export function YearCourseSections({ courses, showElectives = true }: YearCourse
             className="scroll-mt-24 border-b py-12 last:border-b-0"
           >
             <div className="container mx-auto px-4">
-              <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div className="mb-8 flex flex-wrap items-end justify-between gap-4 section-header !text-left md:mb-10">
                 <div>
                   <p className="text-sm font-medium text-primary">{year.description}</p>
                   <h2 className="font-display text-2xl font-bold md:text-3xl">{year.label}</h2>
@@ -58,9 +58,9 @@ export function YearCourseSections({ courses, showElectives = true }: YearCourse
                 </Button>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {yearCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
+              <div className="stagger-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {yearCourses.map((course, i) => (
+                  <CourseCard key={course.id} course={course} index={i} />
                 ))}
               </div>
 
@@ -68,8 +68,8 @@ export function YearCourseSections({ courses, showElectives = true }: YearCourse
                 <div className="mt-8">
                   <h3 className="mb-4 text-lg font-semibold">Electives</h3>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {yearElectives.map((course) => (
-                      <CourseCard key={course.id} course={course} />
+                    {yearElectives.map((course, i) => (
+                      <CourseCard key={course.id} course={course} index={i} />
                     ))}
                   </div>
                 </div>

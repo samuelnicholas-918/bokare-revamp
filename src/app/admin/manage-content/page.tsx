@@ -3,9 +3,10 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { MATERIAL_TYPE_LABELS, formatDate } from "@/lib/utils";
+import { MaterialRowActions } from "@/components/admin/MaterialRowActions";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Pencil, ExternalLink } from "lucide-react";
+import { Plus } from "lucide-react";
 
 export const metadata = { title: "Manage Content" };
 export const dynamic = "force-dynamic";
@@ -57,20 +58,12 @@ export default async function ManageContentPage() {
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">{formatDate(m.updatedAt)}</td>
                 <td className="px-4 py-3 text-right">
-                  <div className="flex justify-end gap-2">
-                    {m.slug && m.contentHtml && (
-                      <Button variant="ghost" size="sm" asChild>
-                        <Link href={`/courses/${m.course.slug}/learn/${m.slug}`} target="_blank">
-                          <ExternalLink className="h-4 w-4" />
-                        </Link>
-                      </Button>
-                    )}
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/admin/upload?edit=${m.id}`}>
-                        <Pencil className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
+                  <MaterialRowActions
+                    materialId={m.id}
+                    courseSlug={m.course.slug}
+                    materialSlug={m.slug}
+                    hasReader={!!(m.slug && m.contentHtml)}
+                  />
                 </td>
               </tr>
             ))}

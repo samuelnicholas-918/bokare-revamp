@@ -35,10 +35,6 @@ async function main() {
       continue;
     }
 
-    const cleaned = addHeadingIds(cleanHtml(raw, { formatAsSyllabus: source.slug === "syllabus" }));
-    const title = source.title;
-    const externalUrl = url;
-
     const course = await prisma.course.findUnique({
       where: { slug: source.courseSlug },
     });
@@ -48,6 +44,15 @@ async function main() {
       skipped++;
       continue;
     }
+
+    const cleaned = addHeadingIds(
+      cleanHtml(raw, {
+        formatAsSyllabus: source.slug === "syllabus",
+        semester: course.semester > 0 ? course.semester : undefined,
+      })
+    );
+    const title = source.title;
+    const externalUrl = url;
 
     const existing = await prisma.material.findFirst({
       where: {

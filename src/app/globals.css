@@ -35,29 +35,32 @@
   .dark {
     color-scheme: dark;
 
-    --background: 0 0% 6%;
-    --foreground: 0 0% 96%;
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 96%;
-    --primary: 182 60% 45%;
-    --primary-foreground: 0 0% 6%;
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 197 80% 80%;
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 69%;
-    --accent: 0 0% 14%;
-    --accent-foreground: 197 80% 80%;
-    --destructive: 0 62% 50%;
+    --background: 222 22% 7%;
+    --foreground: 210 25% 96%;
+    --card: 222 20% 11%;
+    --card-foreground: 210 25% 96%;
+    --primary: 182 62% 48%;
+    --primary-foreground: 222 22% 6%;
+    --secondary: 222 18% 15%;
+    --secondary-foreground: 197 85% 82%;
+    --muted: 222 16% 14%;
+    --muted-foreground: 215 14% 68%;
+    --accent: 222 18% 16%;
+    --accent-foreground: 197 85% 82%;
+    --destructive: 0 62% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 182 60% 45%;
+    --border: 222 16% 20%;
+    --input: 222 16% 18%;
+    --ring: 182 62% 48%;
 
-    --accent-electric: 192 100% 50%;
-    --accent-purple: 271 100% 70%;
-    --accent-gold: 33 100% 65%;
-    --accent-mint: 152 100% 50%;
-    --accent-coral: 0 100% 71%;
+    --accent-electric: 192 100% 58%;
+    --accent-purple: 271 100% 72%;
+    --accent-gold: 33 100% 68%;
+    --accent-mint: 152 100% 52%;
+    --accent-coral: 0 100% 72%;
+
+    --glow-primary: 182 62% 48%;
+    --glow-electric: 192 100% 58%;
   }
 }
 
@@ -72,7 +75,23 @@
 
   body {
     @apply bg-background text-foreground text-base leading-relaxed;
-    transition: background-color 200ms ease, color 200ms ease;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+
+  body:not(.dark) {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(var(--primary) / 0.06), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 0%, hsl(var(--accent-electric) / 0.05), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -15%, hsl(var(--glow-primary) / 0.14), transparent 55%),
+      radial-gradient(ellipse 55% 45% at 100% 0%, hsl(var(--glow-electric) / 0.07), transparent 50%),
+      radial-gradient(ellipse 45% 35% at 0% 100%, hsl(var(--accent-purple) / 0.06), transparent 45%);
+    background-attachment: fixed;
   }
 
   h1 {
@@ -99,6 +118,20 @@
   textarea,
   select {
     @apply min-h-11;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   @media (hover: none) {
@@ -349,11 +382,491 @@
     @apply mt-4;
   }
 
+  .content-study .study-doc {
+    @apply space-y-6 md:space-y-8;
+  }
+
+  .content-study .study-chapter-title {
+    @apply sr-only;
+  }
+
+  .content-study .study-section {
+    @apply rounded-2xl border bg-card p-5 md:p-6;
+  }
+
+  .content-study .study-section-title {
+    @apply mb-4 mt-0 scroll-mt-28 border-b pb-3 font-display text-xl font-semibold text-teal dark:text-primary md:text-2xl;
+  }
+
+  .content-study .study-subsection-title {
+    @apply mb-3 mt-6 font-display text-lg font-semibold text-foreground;
+  }
+
+  .content-study .study-formula {
+    @apply my-6 overflow-x-auto rounded-xl border border-teal/20 bg-teal/5 px-4 py-5 text-center dark:bg-teal/10;
+  }
+
+  .content-study .study-formula math {
+    @apply text-lg md:text-xl;
+  }
+
+  .content-study .study-definitions {
+    @apply my-6 rounded-xl border border-electric-blue/30 bg-electric-blue/5 p-4 font-mono text-sm leading-relaxed dark:bg-[hsl(var(--accent-electric)/0.08)] md:p-5 md:text-base;
+  }
+
+  .content-study .study-figure,
+  .content-study .study-figure-wrap {
+    @apply my-8 overflow-x-auto rounded-xl border bg-muted/30 p-4;
+  }
+
+  .content-study .study-figure svg {
+    @apply mx-auto max-w-full;
+  }
+
+  .content-study .study-quote {
+    @apply my-4 rounded-xl border-l-4 border-purple bg-purple/10 px-4 py-3 text-base italic dark:bg-purple/15 md:px-5;
+  }
+
+  .content-study .study-numbered-list {
+    @apply list-none space-y-3 pl-0;
+  }
+
+  .content-study .study-key-point {
+    @apply rounded-xl border bg-muted/40 p-4 md:p-5;
+  }
+
+  .content-study .study-key-point strong,
+  .content-study .study-key-point b {
+    @apply mb-2 block font-display text-base text-teal dark:text-primary md:text-lg;
+  }
+
+  .content-study .study-key-point .study-paragraph-nested {
+    @apply mb-0 text-sm leading-relaxed text-muted-foreground md:text-base;
+  }
+
+  .content-study .study-inline-link {
+    @apply font-medium text-primary underline-offset-2 hover:underline;
+  }
+
+  .content-study .study-bullet-list {
+    @apply space-y-2 pl-5;
+  }
+
+  .content-study .study-bullet-list li {
+    @apply rounded-lg bg-muted/20 px-3 py-2;
+  }
+
+  .content-study .study-callout {
+    @apply rounded-xl border-l-4 px-4 py-3 md:px-5;
+  }
+
+  .content-study .study-callout-tip {
+    @apply border-gold bg-gold/10 dark:bg-gold/15;
+  }
+
+  .content-study .study-callout-definition {
+    @apply border-purple bg-purple/10 dark:bg-purple/15;
+  }
+
+  .content-study .study-table-wrap {
+    @apply my-6;
+  }
+
+  .content-study .study-section > p:first-of-type {
+    @apply text-base leading-relaxed text-muted-foreground md:text-lg;
+  }
+
+  .content-study .study-paragraph-group {
+    @apply my-4 space-y-3;
+  }
+
+  .content-study .study-paragraph {
+    @apply rounded-xl border border-border/70 bg-muted/25 px-4 py-4 text-base leading-8 text-foreground md:px-5 md:py-5 md:text-lg md:leading-8;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .content-study .study-paragraph-long {
+    @apply leading-8 md:leading-9;
+  }
+
+  .content-study .study-paragraph-nested {
+    @apply mt-2 border-0 bg-transparent p-0 text-base leading-relaxed text-muted-foreground md:text-base;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .content-study .study-latex-table {
+    @apply text-sm md:text-base;
+  }
+
+  .content-study .study-latex-table th,
+  .content-study .study-latex-table td {
+    @apply whitespace-normal break-words align-top;
+  }
+
+  .content-study .study-lead {
+    @apply border-teal/25 bg-teal/5 font-medium text-foreground dark:bg-teal/10;
+  }
+
+  .content-study .study-attribution {
+    @apply my-5 rounded-xl border-l-4 border-gold bg-gold/10 px-5 py-4 dark:bg-gold/15;
+  }
+
+  .content-study .study-attribution blockquote {
+    @apply m-0 border-0 bg-transparent p-0 text-base italic leading-relaxed md:text-lg;
+  }
+
+  .content-study .study-attribution blockquote p {
+    @apply mb-0;
+  }
+
+  .content-study .study-attribution figcaption {
+    @apply mt-3 text-sm font-semibold text-teal dark:text-primary;
+  }
+
+  .content-study .study-pull-quote {
+    @apply my-6 rounded-2xl border border-purple/30 bg-purple/10 px-6 py-5 text-center dark:bg-purple/15 md:px-8;
+  }
+
+  .content-study .study-pull-quote blockquote {
+    @apply m-0 border-0 bg-transparent p-0 text-lg italic leading-relaxed text-foreground md:text-xl;
+  }
+
+  .content-study .study-definition-types {
+    @apply rounded-xl border border-electric-blue/30 bg-electric-blue/10 px-5 py-4 dark:bg-[hsl(var(--accent-electric)/0.1)] md:text-lg;
+  }
+
+  .content-study .study-definition-types i,
+  .content-study .study-definition-types em {
+    @apply rounded-md bg-background/80 px-1.5 py-0.5 font-semibold not-italic text-teal dark:text-primary;
+  }
+
+  .content-study .study-section .study-paragraph-group + .study-paragraph,
+  .content-study .study-section .study-attribution + .study-paragraph,
+  .content-study .study-section .study-pull-quote + .study-paragraph {
+    @apply mt-3;
+  }
+
   .touch-target {
     @apply inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation;
   }
 
   .card-interactive {
-    @apply transition-transform duration-200 active:scale-[0.98] md:hover:-translate-y-1 md:hover:shadow-lg;
+    @apply transition-[transform,box-shadow,border-color] duration-300 ease-out active:scale-[0.98] md:hover:-translate-y-1 md:hover:shadow-lg;
+  }
+
+  .animate-page-enter {
+    animation: pageEnter 0.35s ease-out both;
+  }
+
+  .list-item-enter {
+    animation: fadeIn 0.4s ease-out both;
+  }
+
+  @keyframes pageEnter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  [data-state="active"][role="tabpanel"] {
+    animation: fadeIn 0.25s ease-out both;
+  }
+
+  .page-hero {
+    @apply shadow-sm dark:shadow-[0_8px_32px_-8px_hsl(222_40%_2%/0.5)];
+  }
+
+  .section-header {
+    @apply mb-8 text-center md:mb-10;
+  }
+
+  .section-header h2 {
+    @apply font-display text-2xl font-bold md:text-3xl;
+  }
+
+  .section-header p {
+    @apply mt-2 text-muted-foreground;
+  }
+
+  .stats-strip {
+    @apply mt-8 flex flex-wrap items-center justify-center gap-6 md:gap-10;
+  }
+
+  .stat-item {
+    @apply flex flex-col items-center;
+  }
+
+  .stat-value {
+    @apply font-display text-2xl font-bold text-primary md:text-3xl;
+  }
+
+  .stat-label {
+    @apply text-xs font-medium uppercase tracking-wide text-muted-foreground;
+  }
+
+  .quick-link-tile {
+    @apply min-w-0 rounded-xl border bg-card p-4 text-center text-sm font-medium surface-card transition-[transform,border-color,box-shadow] duration-300 hover:border-primary/40 hover:bg-primary/5 hover:shadow-md active:scale-[0.98];
+  }
+
+  .material-list-item {
+    @apply list-item-enter rounded-xl border bg-card p-4 surface-card transition-[transform,box-shadow,border-color] duration-300 hover:border-primary/30 hover:shadow-md active:scale-[0.99] md:hover:-translate-y-0.5;
+  }
+
+  .material-list-icon {
+    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary;
+  }
+
+  /* ── Chart & diagram figures (from LaTeX/TikZ) ── */
+  .study-chart-figure {
+    @apply my-8;
+  }
+
+  .study-chart-grid {
+    @apply grid gap-6 lg:grid-cols-2;
+  }
+
+  .study-chart-panel svg,
+  .study-flow-figure svg {
+    @apply w-full max-w-full rounded-xl border bg-card p-3;
+  }
+
+  .study-chart-panel figcaption,
+  .study-mini-chart figcaption {
+    @apply mt-2 text-center text-sm font-medium text-muted-foreground;
+  }
+
+  .study-chart-main-caption {
+    @apply mt-4 text-center text-sm font-semibold text-foreground;
+  }
+
+  .study-mini-chart-grid {
+    @apply grid grid-cols-2 gap-4 sm:grid-cols-4;
+  }
+
+  .study-mini-chart-grid-2 {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+
+  .study-mini-chart svg {
+    @apply w-full rounded-lg border bg-background p-2;
+  }
+
+  .study-figure-group {
+    @apply my-8 space-y-8;
+  }
+
+  .chart-grid {
+    stroke: hsl(var(--border));
+    stroke-dasharray: 4 4;
+    stroke-width: 0.75;
+  }
+
+  .chart-axis {
+    stroke: hsl(var(--foreground));
+    stroke-width: 1.5;
+  }
+
+  .chart-axis-label,
+  .chart-axis-title {
+    fill: hsl(var(--muted-foreground));
+    font-size: 11px;
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  .chart-axis-title {
+    font-size: 12px;
+    font-weight: 600;
+    fill: hsl(var(--foreground));
+  }
+
+  .chart-line {
+    stroke: hsl(var(--primary));
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .chart-line-dashed {
+    stroke: hsl(var(--muted-foreground));
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+  }
+
+  .chart-point-label {
+    fill: hsl(var(--primary));
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-poppins), sans-serif;
+  }
+
+  .chart-annotation {
+    fill: hsl(var(--destructive));
+    font-size: 11px;
+    font-family: var(--font-mono), monospace;
+  }
+
+  .flow-node {
+    fill: var(--flow-node-fill, hsl(182 62% 48% / 0.22));
+    stroke: var(--flow-node-stroke, hsl(182 62% 48%));
+    stroke-width: 2;
+  }
+
+  .flow-diagram {
+    --flow-node-fill: hsl(182 62% 48% / 0.22);
+    --flow-node-stroke: hsl(182 62% 48%);
+    --flow-edge-label-fill: hsl(215 16% 35%);
+  }
+
+  .flow-node-label {
+    fill: hsl(var(--foreground));
+    font-size: 14px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: var(--font-poppins), sans-serif;
+  }
+
+  .flow-edge {
+    stroke-width: 2.5;
+    fill: none;
+  }
+
+  .flow-edge-goods { stroke: hsl(199 89% 48%); color: hsl(199 89% 48%); }
+  .flow-edge-invoice { stroke: hsl(182 62% 48%); color: hsl(182 62% 48%); }
+  .flow-edge-ack { stroke: hsl(262 52% 47%); color: hsl(262 52% 47%); }
+  .flow-edge-pay { stroke: hsl(12 76% 61%); color: hsl(12 76% 61%); }
+
+  .flow-arrow-head {
+    fill: currentColor;
+  }
+
+  .flow-edge-label {
+    fill: var(--flow-edge-label-fill, hsl(var(--muted-foreground)));
+    font-size: 12px;
+    font-family: var(--font-inter), sans-serif;
+    text-anchor: middle;
+  }
+
+  .flow-edge-label-strong {
+    fill: hsl(var(--foreground));
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .flow-edge-vertical {
+    writing-mode: vertical-rl;
+  }
+
+  .study-fig-ref {
+    @apply font-medium text-primary;
+  }
+
+  .study-latex-fallback details {
+    @apply rounded-xl border bg-muted/30 p-4;
+  }
+
+  .study-latex-source {
+    @apply mt-2 max-h-48 overflow-auto text-xs;
+  }
+
+  .dark .study-chart-panel svg,
+  .dark .study-flow-figure svg {
+    @apply border-primary/15 bg-card/80 shadow-lg shadow-black/20;
+  }
+
+  .dark .flow-diagram {
+    --flow-node-fill: hsl(192 100% 58% / 0.28);
+    --flow-node-stroke: hsl(192 100% 58%);
+    --flow-edge-label-fill: hsl(215 20% 78%);
+  }
+
+  .dark .flow-edge-goods { stroke: hsl(199 100% 62%); color: hsl(199 100% 62%); }
+  .dark .flow-edge-invoice { stroke: hsl(192 100% 58%); color: hsl(192 100% 58%); }
+  .dark .flow-edge-ack { stroke: hsl(270 70% 72%); color: hsl(270 70% 72%); }
+  .dark .flow-edge-pay { stroke: hsl(12 90% 68%); color: hsl(12 90% 68%); }
+
+  .dark .flow-edge-label-strong {
+    fill: hsl(210 40% 96%);
+  }
+
+  .dark .chart-line {
+    stroke: hsl(var(--accent-electric));
+  }
+
+  /* ── Enhanced dark mode surfaces ── */
+  .dark .glass-nav {
+    @apply border-primary/10 bg-background/75 shadow-[0_1px_0_0_hsl(var(--primary)/0.08)];
+  }
+
+  .dark .surface-card {
+    @apply border-border/80 bg-card/90 shadow-[0_0_0_1px_hsl(var(--border)/0.5),0_8px_32px_-8px_hsl(222_40%_2%/0.65)];
+  }
+
+  .dark .surface-card:hover {
+    @apply border-primary/25 shadow-[0_0_0_1px_hsl(var(--primary)/0.15),0_12px_40px_-10px_hsl(var(--glow-primary)/0.12)];
+  }
+
+  .dark .content-syllabus .syllabus-header {
+    @apply border border-primary/15 from-primary/20 via-card to-[hsl(var(--accent-electric)/0.12)] shadow-[inset_0_1px_0_0_hsl(var(--primary)/0.1)];
+  }
+
+  .dark .content-syllabus .syllabus-section {
+    @apply border-border/70 bg-card/80 shadow-lg shadow-black/25;
+  }
+
+  .dark .content-syllabus .syllabus-unit-card {
+    @apply border-primary/10 bg-card/70 shadow-md shadow-black/30;
+  }
+
+  .dark .content-syllabus .syllabus-objectives li {
+    @apply bg-muted/50;
+  }
+
+  .dark .content-syllabus .syllabus-co-card {
+    @apply border-primary/10 bg-muted/40;
+  }
+
+  .dark .content-study .study-section {
+    @apply border-border/70 bg-card/85 shadow-lg shadow-black/20;
+  }
+
+  .dark .content-study .study-paragraph {
+    @apply border-primary/10 bg-card/60;
+  }
+
+  .dark .content-study .study-figure,
+  .dark .content-study .study-figure-wrap {
+    @apply border-primary/10 bg-muted/40;
+  }
+
+  .dark .content-prose pre {
+    @apply border-primary/15 bg-[hsl(222,22%,9%)] text-[hsl(210,20%,88%)];
+  }
+
+  .dark .content-prose code {
+    @apply bg-muted/80 text-[hsl(var(--accent-electric))];
+  }
+
+  .dark .content-prose img {
+    @apply rounded-lg ring-1 ring-border/50;
+  }
+
+  .dark .content-table-wrapper {
+    @apply rounded-xl ring-1 ring-border/50;
+  }
+
+  .dark .content-table th {
+    @apply bg-primary/20 text-foreground;
+  }
+
+  .dark .content-table tr:nth-child(even) td {
+    @apply bg-muted/30;
   }
 }

@@ -27,6 +27,15 @@ export function getAcademicYear(semester: number): string | null {
   return null;
 }
 
+const ROMAN_SEMESTERS = ["", "I", "II", "III", "IV", "V", "VI"] as const;
+
+/** Official B.Com semester label — corrects wrong labels in legacy HTML (e.g. Sem IV shown as Sem III). */
+export function formatBComSemesterLabel(semester: number): string {
+  if (semester < 1 || semester > 6) return "";
+  const year = semester <= 2 ? "FY" : semester <= 4 ? "SY" : "TY";
+  return `${year} B Com Semester ${ROMAN_SEMESTERS[semester]}`;
+}
+
 export const ACADEMIC_YEARS = [
   {
     id: "first-year",

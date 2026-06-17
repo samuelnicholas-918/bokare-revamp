@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { AppShell } from "@/components/AppShell";
 import { Providers } from "@/components/Providers";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 
@@ -46,7 +44,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#FAF6F0" },
-    { media: "(prefers-color-scheme: dark)", color: "#0F0F0F" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E1218" },
   ],
 };
 
@@ -62,12 +60,7 @@ export default function RootLayout({
       >
         <Providers>
           <AnalyticsTracker />
-          <div className="flex min-h-screen flex-col pb-16 md:pb-0">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <MobileBottomNav />
-          </div>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>

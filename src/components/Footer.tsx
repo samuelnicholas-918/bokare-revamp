@@ -3,7 +3,7 @@ import { BookOpen } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/30">
+    <footer className="border-t bg-muted/30 dark:border-primary/10 dark:bg-card/40">
       <div className="container mx-auto px-4 py-12">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
@@ -23,6 +23,7 @@ export function Footer() {
               <li><Link href="/search" className="hover:text-foreground">Search Materials</Link></li>
               <li><Link href="/courses?category=CORE" className="hover:text-foreground">Core Courses</Link></li>
               <li><Link href="/courses?category=ELECTIVE" className="hover:text-foreground">Electives</Link></li>
+              <li><Link href="/admin/login" className="hover:text-foreground">Professor login</Link></li>
             </ul>
           </div>
           <div>

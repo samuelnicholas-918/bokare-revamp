@@ -19,9 +19,9 @@ export function ContentHero({
   wordCount,
 }: ContentHeroProps) {
   return (
-    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-teal via-teal to-electric-blue px-5 py-8 text-white md:rounded-2xl md:px-10 md:py-14">
-      <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/10 blur-3xl md:h-64 md:w-64" />
-      <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-purple/20 blur-2xl" />
+    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-teal via-teal to-electric-blue px-5 py-8 text-white dark:from-[hsl(182,45%,22%)] dark:via-[hsl(200,35%,16%)] dark:to-[hsl(271,28%,18%)] dark:shadow-[inset_0_1px_0_0_hsl(var(--primary)/0.2),0_8px_32px_-8px_hsl(222_40%_2%/0.6)] md:rounded-2xl md:px-10 md:py-14">
+      <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/10 blur-3xl dark:bg-primary/20 md:h-64 md:w-64" />
+      <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-purple/20 blur-2xl dark:bg-[hsl(var(--accent-purple)/0.25)]" />
 
       <div className="relative">
         <div className="mb-3 flex flex-wrap items-center gap-2 md:mb-4">

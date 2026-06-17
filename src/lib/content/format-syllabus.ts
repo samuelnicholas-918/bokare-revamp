@@ -1,5 +1,9 @@
 import * as cheerio from "cheerio";
 import { fixTypos } from "./clean-html";
+import { formatBComSemesterLabel } from "@/lib/utils";
+
+/** Match Roman numeral units longest-first so "Unit IV" is not parsed as "Unit I". */
+const UNIT_ROMAN_PATTERN = /Unit\s+(X|IX|VIII|VII|VI|IV|III|II|I|V|\d+)/i;
 
 function escapeHtml(text: string): string {
   return text
@@ -22,8 +26,9 @@ function splitTopicItems(text: string): { label: string; items: string[] } {
 
   const items = body
     .split(/,\s+(?=[A-Za-z(])/)
-    .map((item) => item.trim())
-    .filter(Boolean);
+    .map((item) => item.replace(/,\s*$/, "").trim())
+    .filter(Boolean)
+    .map((item) => fixTypos(item));
 
   return { label, items: items.length > 1 ? items : [body || normalized] };
 }
@@ -33,7 +38,7 @@ export function isSyllabusContent(html: string): boolean {
   return text.includes("course objectives") && text.includes("course outcome");
 }
 
-export function formatSyllabusHtml(html: string): string {
+export function formatSyllabusHtml(html: string, options?: { semester?: number }): string {
   const $ = cheerio.load(`<div id="syllabus-root">${html}</div>`);
   const root = $("#syllabus-root");
 
@@ -103,7 +108,7 @@ export function formatSyllabusHtml(html: string): string {
   const divs = root.find("div").toArray();
   for (let i = 0; i < divs.length; i++) {
     const text = $(divs[i]).text().replace(/\s+/g, " ").trim();
-    const unitMatch = text.match(/Unit\s+(I{1,3}|IV|V|VI|\d+)/i);
+    const unitMatch = text.match(UNIT_ROMAN_PATTERN);
     const hoursMatch = text.match(/(\d+)\s*Hours/i);
 
     if (unitMatch && hoursMatch) {
@@ -151,6 +156,10 @@ export function formatSyllabusHtml(html: string): string {
     marksTableHtml = `<div class="content-table-wrapper"><table class="content-table">${marksTable.html()}</table></div>`;
   } else if (marksTable.length > 0 && evaluationBlocks.length > 0) {
     marksTableHtml = `<div class="content-table-wrapper"><table class="content-table">${marksTable.html()}</table></div>`;
+  }
+
+  if (options?.semester && options.semester >= 1 && options.semester <= 6) {
+    semester = formatBComSemesterLabel(options.semester);
   }
 
   const parts: string[] = ['<div class="syllabus-doc">'];

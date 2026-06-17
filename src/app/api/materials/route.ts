@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
-import { MaterialType } from "@prisma/client";
+import { validateMaterialPayload } from "@/lib/material-validation";
 
 export async function POST(request: NextRequest) {
   const session = await requireAdmin();
@@ -11,25 +11,23 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { courseId, type, title, description, fileUrl, externalUrl, order } = body;
-
-    if (!courseId || !type || !title) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    if (!Object.values(MaterialType).includes(type)) {
-      return NextResponse.json({ error: "Invalid material type" }, { status: 400 });
+    const validationError = validateMaterialPayload(body);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
     const material = await prisma.material.create({
       data: {
-        courseId,
-        type,
-        title,
-        description,
-        fileUrl,
-        externalUrl,
-        order: order ?? 0,
+        courseId: body.courseId,
+        type: body.type,
+        title: body.title,
+        description: body.description ?? null,
+        fileUrl: body.fileUrl ?? null,
+        externalUrl: body.externalUrl ?? null,
+        contentHtml: body.contentHtml ?? null,
+        slug: body.slug ?? null,
+        order: body.order ?? 0,
+        fileSizeBytes: body.fileSizeBytes ?? null,
       },
     });
 

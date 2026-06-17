@@ -23,6 +23,8 @@ export const authOptions: NextAuthOptions = {
         const valid = await compare(credentials.password, user.passwordHash);
         if (!valid) return null;
 
+        if (user.role !== "ADMIN") return null;
+
         return {
           id: user.id,
           email: user.email,
