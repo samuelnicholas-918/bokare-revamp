@@ -161,7 +161,7 @@ export default async function HomePage() {
                   ] as const
                 ).map((item) => {
                   const visual = "yearId" in item ? YEAR_VISUALS[item.yearId] : null;
-                  const Icon = visual?.icon ?? item.icon;
+                  const Icon = visual?.icon ?? ("icon" in item ? item.icon : BookOpen);
 
                   return (
                     <Link
